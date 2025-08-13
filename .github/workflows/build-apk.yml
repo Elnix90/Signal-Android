@@ -47,7 +47,7 @@ jobs:
 
       # Build Signal debug APK (no tests, faster)
       - name: Build Signal Debug
-        run: ./gradlew :app:assembleDebug --no-daemon --console=plain --max-workers=2
+        run: ./gradlew assembleDebug --no-daemon --console=plain --max-workers=2
 
       # Upload the APK as an artifact
       - name: Upload APK
