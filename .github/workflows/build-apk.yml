@@ -1,4 +1,4 @@
-name: Android APK (Debug)
+name: Build APK (Gradle only)
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -19,25 +19,15 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          api-level: 34
-          build-tools: "34.0.0"
-
-      - name: Make Gradle executable
+      - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
-      - name: Gradle build (assembleDebug)
-        run: |
-          ./gradlew --no-daemon --stacktrace \
-            clean :app:assembleDebug -x test
+      - name: Build debug APK
+        run: ./gradlew --no-daemon --stacktrace :app:assembleDebug -x test
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: debug-apk
-          path: |
-            app/build/outputs/apk/debug/*.apk
-            **/build/outputs/apk/*/app-*.apk
+          path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
