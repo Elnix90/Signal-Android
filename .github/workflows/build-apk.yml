@@ -1,4 +1,4 @@
-name: Android Build (Optimized)
+name: Android Build (Optimized for Low Memory)
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Limit Gradle JVM memory to avoid runner OOM
+      # Limit Gradle JVM memory
       GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx3g -Dkotlin.daemon.jvm.options=-Xmx1g"
 
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Cache Gradle dependencies for faster builds
+      # Cache Gradle dependencies
       - name: Cache Gradle
         uses: actions/cache@v3
         with:
@@ -37,7 +37,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Set up Android SDK (without deprecated cmdline-tools-version)
+      # Set up Android SDK (default install, no deprecated args)
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
 
@@ -45,8 +45,14 @@ jobs:
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
 
-      # Build Signal debug APK (no tests, faster)
-      - name: Build Signal Debug
+      # Limit Kotlin compiler memory in gradle.properties
+      - name: Configure Gradle properties
+        run: |
+          echo "org.gradle.jvmargs=-Xmx3g" >> gradle.properties
+          echo "kotlin.daemon.jvmargs=-Xmx1024m" >> gradle.properties
+
+      # Build only the debug variant (lighter than PlayStagingDebug)
+      - name: Build Signal Debug APK
         run: ./gradlew assembleDebug --no-daemon --console=plain --max-workers=2
 
       # Upload the APK as an artifact
