@@ -124,39 +124,38 @@ private val lightExtendedColors = ExtendedColors(
 )
 
 private val darkExtendedColors = ExtendedColors(
-  neutralSurface = Color(0x14000000),             // changed from 0x14FFFFFF to transparent black
+  neutralSurface = Color(0xFF000000),
   colorOnCustom = Color(0xFFFFFFFF),
   colorOnCustomVariant = Color(0xB3FFFFFF),
-  colorSurface1 = Color(0xFF000000),               // set to pure black
-  colorSurface2 = Color(0xFF000000),               // set to pure black
-  colorSurface3 = Color(0xFF000000),               // set to pure black
-  colorSurface4 = Color(0xFF000000),               // set to pure black
-  colorSurface5 = Color(0xFF000000),               // set to pure black
-  colorTransparent1 = Color(0x0A000000),           // transparent black (unchanged from adjustment above)
-  colorTransparent2 = Color(0x1F000000),           // slightly more opaque transparent black
-  colorTransparent3 = Color(0x29000000),           // unchanged
-  colorTransparent4 = Color(0x7A000000),           // unchanged
-  colorTransparent5 = Color(0xB8000000),           // unchanged
-  colorNeutral = Color(0xFF000000),                 // set to pure black
-  colorNeutralVariant = Color(0xFF5C5C5C),          // keep as is - a gray variant
-  colorTransparentInverse1 = Color(0x0AFFFFFF),     // keep inverted transparents as white transparent
-  colorTransparentInverse2 = Color(0x14FFFFFF),
-  colorTransparentInverse3 = Color(0x29FFFFFF),
-  colorTransparentInverse4 = Color(0xB8FFFFFF),
-  colorTransparentInverse5 = Color(0xF5FFFFFF),
+  colorSurface1 = Color(0xFF000000),
+  colorSurface2 = Color(0xFF000000),
+  colorSurface3 = Color(0xFF000000),
+  colorSurface4 = Color(0xFF000000),
+  colorSurface5 = Color(0xFF000000),
+  colorTransparent1 = Color(0x0AFFFFFF),
+  colorTransparent2 = Color(0x1FFFFFFF),
+  colorTransparent3 = Color(0x29FFFFFF),
+  colorTransparent4 = Color(0x7AFFFFFF),
+  colorTransparent5 = Color(0xB8FFFFFF),
+  colorNeutral = Color(0xFF000000),
+  colorNeutralVariant = Color(0xFF5C5C5C),
+  colorTransparentInverse1 = Color(0x0A000000),
+  colorTransparentInverse2 = Color(0x14000000),
+  colorTransparentInverse3 = Color(0x29000000),
+  colorTransparentInverse4 = Color(0xB8000000),
+  colorTransparentInverse5 = Color(0xF5000000),
   colorNeutralInverse = Color(0xE0FFFFFF),
   colorNeutralVariantInverse = Color(0xA3FFFFFF)
 )
 
-
 private val darkColorScheme = darkColorScheme(
   primary = Color(0xFFB6C5FA),
-  primaryContainer = Color(0xFF464B5C),
+  primaryContainer = Color(0xFF000000),
   secondary = Color(0xFFC1C6DD),
-  secondaryContainer = Color(0xFF414659),
-  surface = Color(0xFF000000),           // replaced with pure black
-  surfaceVariant = Color(0xFF000000),    // replaced with pure black
-  background = Color(0xFF000000),        // replaced with pure black
+  secondaryContainer = Color(0xFF000000),
+  surface = Color(0xFF000000),
+  surfaceVariant = Color(0xFF000000),
+  background = Color(0xFF000000),
   error = Color(0xFFFFB4A9),
   errorContainer = Color(0xFF930006),
   onPrimary = Color(0xFF1E2438),
@@ -192,7 +191,6 @@ fun SignalTheme(
 ) {
   val extendedColors = if (isDarkMode) darkExtendedColors else lightExtendedColors
   val snackbarColors = if (isDarkMode) darkSnackbarColors else lightSnackbarColors
-
   CompositionLocalProvider(LocalExtendedColors provides extendedColors, LocalSnackbarColors provides snackbarColors) {
     MaterialTheme(
       colorScheme = if (isDarkMode) darkColorScheme else lightColorScheme,
